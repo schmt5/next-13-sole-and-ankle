@@ -1,7 +1,7 @@
 import { pb } from "@/helpers/pocketbase";
 
 export default async function ShopLayout({ children }) {
-    const records = await pb.collection('shoes').getList(1, 1);
+    const records = await pb.collection('shoes').getList(1, 1, { '$cancelKey': "totalCount" });
 
     return (
         <div>
