@@ -8,10 +8,11 @@ import {
 } from '@/utils';
 
 import styles from './ShoeCard.module.css';
+import { pb } from '@/helpers/pocketbase';
 
 function ShoeCard({ shoe, isPlaceholder }) {
   const {
-    slug,
+    id,
     name,
     imageSrc,
     price,
@@ -20,12 +21,12 @@ function ShoeCard({ shoe, isPlaceholder }) {
     numOfColors,
   } = shoe;
 
-  const variant =
-    typeof salePrice === 'number'
-      ? 'on-sale'
-      : isNewShoe(releaseDate)
-      ? 'new-release'
-      : 'default';
+  const url = pb.files.getUrl(shoe, imageSrc, { thumb: '100x100' })
+
+  let variant = 'default';
+  if (salePrice > 0) {
+    variant = 'on-sale'
+  }
 
   return (
     <Link
@@ -45,7 +46,7 @@ function ShoeCard({ shoe, isPlaceholder }) {
             <img
               className={styles.image}
               alt=""
-              src={imageSrc}
+              src={url}
             />
           )}
           {variant === 'on-sale' && (

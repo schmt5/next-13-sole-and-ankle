@@ -10,7 +10,7 @@ function ShoeGrid({ isPlaceholder, shoes }) {
     <div className={styles.wrapper} aria-hidden={isPlaceholder}>
       {actualShoes.map((shoe) => (
         <ShoeCard
-          key={shoe.slug}
+          key={shoe.id ?? shoe.slug} // FAKE_SHOES has `slug` instead of `id`
           shoe={shoe}
           isPlaceholder={isPlaceholder}
         />
